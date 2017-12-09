@@ -7,7 +7,9 @@ extern "C"
 
 }
 
-extern "C" void run_daemon(const char*);
+extern "C"
+[[noreturn]]
+void run_daemon(const char*);
 
 int main(int argc, char** argv)
 {

@@ -11,4 +11,4 @@ set(CMAKE_CXX_EXTENSIONS OFF CACHE BOOL "compiler extension")
 find_package(Threads REQUIRED)
 
 add_executable(studio_daemon src/main.cpp src/daemon.cpp)
-target_link_libraries(studio_daemon Threads::Threads)
+target_link_libraries(studio_daemon Threads::Threads wiringPi)

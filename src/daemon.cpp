@@ -1,3 +1,15 @@
+namespace
+{
+
+constexpr auto read_pin {0};
+constexpr auto token {
+#include "token"
+};
+
+}
+
+#include <sstream>
+
 extern "C"
 {
 
@@ -9,7 +21,13 @@ extern "C"
 namespace
 {
 
-constexpr auto read_pin {0};
+enum class StudioState
+{
+  open,
+  close
+};
+
+void notify(const StudioState& state);
 
 }
 
@@ -28,13 +46,33 @@ void run_daemon(const char* executable_name)
       continue;
 
     if (value != LOW) {
-      syslog(LOG_INFO, "Studio is closed");
-      // send Close to LINE
-    } else {
       syslog(LOG_INFO, "Studio is open");
-      // send Open to LINE
+      notify(StudioState::open);
+    } else {
+      syslog(LOG_INFO, "Studio is closed");
+      notify(StudioState::close);
     }
 
     last_value = value;
   }
+}
+
+namespace
+{
+
+void notify(const StudioState& state)
+{
+  std::ostringstream oss;
+  oss << "curl -X POST -H 'Authorization: Bearer " << token << "' -F 'message=";
+  switch (state) {
+  case StudioState::open:
+    oss << "Studio is open.";
+    break;
+  case StudioState::close:
+    oss << "Studio is closed.";
+  }
+  oss << "' https://notify-api.line.me/api/notify";
+  std::system(oss.str().c_str());
+}
+
 }

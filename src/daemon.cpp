@@ -10,12 +10,9 @@ constexpr auto token {
 
 #include <sstream>
 
-extern "C"
-{
-
+extern "C" {
 #include <syslog.h>
 #include <wiringPi.h>
-
 }
 
 namespace
@@ -40,8 +37,7 @@ void run_daemon(const char* executable_name)
   openlog(executable_name, LOG_PID, LOG_DAEMON);
 
   auto last_value {digitalRead(read_pin)};
-  while (true) {
-    auto value {digitalRead(read_pin)};
+  for (auto value {digitalRead(read_pin)}; true; last_value = value) {
     if (last_value == value)
       continue;
 
@@ -52,8 +48,6 @@ void run_daemon(const char* executable_name)
       syslog(LOG_INFO, "Studio is closed");
       notify(StudioState::close);
     }
-
-    last_value = value;
   }
 }
 

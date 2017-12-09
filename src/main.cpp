@@ -1,11 +1,8 @@
 #include <cstdlib>
 
-extern "C"
-{
-
+extern "C" {
 #include <unistd.h>
 #include "run_daemon.h"
-
 }
 
 int main([[maybe_unused]] int argc, char** argv)

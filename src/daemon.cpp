@@ -8,6 +8,7 @@ constexpr auto token {
 
 }
 
+#include <cstdlib>
 #include <sstream>
 
 extern "C" {
@@ -33,9 +34,12 @@ extern "C"
 [[noreturn]]
 void run_daemon(const char* executable_name)
 {
-  wiringPiSetup();
-  pinMode(read_pin, INPUT);
   openlog(executable_name, LOG_PID, LOG_DAEMON);
+  if (wiringPiSetup()) {
+    syslog(LOG_ERR, "Unavailable Wiring Pi");
+    std::exit(EXIT_FAILURE);
+  }
+  pinMode(read_pin, INPUT);
 
   auto last_value {digitalRead(read_pin)};
   for (auto value {digitalRead(read_pin)}; true; last_value = value) {
@@ -67,7 +71,7 @@ void notify(const StudioState& state)
     oss << "Studio is closed.";
   }
   oss << "' https://notify-api.line.me/api/notify";
-  std::system(oss.str().c_str());
+  static_cast<void>(std::system(oss.str().c_str()));
 }
 
 }

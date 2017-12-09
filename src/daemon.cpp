@@ -13,6 +13,7 @@ constexpr auto token {
 extern "C" {
 #include <syslog.h>
 #include <wiringPi.h>
+#include "run_daemon.h"
 }
 
 namespace

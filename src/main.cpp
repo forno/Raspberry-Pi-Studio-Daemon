@@ -4,12 +4,9 @@ extern "C"
 {
 
 #include <unistd.h>
+#include "run_daemon.h"
 
 }
-
-extern "C"
-[[noreturn]]
-void run_daemon(const char*);
 
 int main([[maybe_unused]] int argc, char** argv)
 {

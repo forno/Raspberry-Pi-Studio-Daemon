@@ -10,12 +10,9 @@ constexpr auto token {
 
 #include <sstream>
 
-extern "C"
-{
-
+extern "C" {
 #include <syslog.h>
 #include <wiringPi.h>
-
 }
 
 namespace

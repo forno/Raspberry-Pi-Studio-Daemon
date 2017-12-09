@@ -12,3 +12,6 @@ find_package(Threads REQUIRED)
 
 add_executable(studio_daemon src/main.cpp src/daemon.cpp)
 target_link_libraries(studio_daemon Threads::Threads wiringPi)
+target_compile_options(studio_daemon PRIVATE
+  $<$<CXX_COMPILER_ID:Clang>:-Weverything -Wno-c++98-compat>
+  $<$<CXX_COMPILER_ID:GNU>:-Wall -Wextra>)

@@ -25,3 +25,9 @@ make
 
 Raspberry Pi Studio Daemon automatically become daemon allway.
 Forexample You run this on terminal or call by init.
+
+Note: The program require super user permittion for Wiring Pi.
+
+```bash
+sudo build/studio_daemon
+```

@@ -42,7 +42,7 @@ void run_daemon(const char* executable_name)
   pinMode(read_pin, INPUT);
 
   auto last_value {digitalRead(read_pin)};
-  for (auto value {digitalRead(read_pin)}; true; last_value = value) {
+  for (auto value {digitalRead(read_pin)}; true; last_value = value, value = digitalRead(read_pin)) {
     if (last_value == value)
       continue;
 

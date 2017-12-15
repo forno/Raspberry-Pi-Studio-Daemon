@@ -15,3 +15,11 @@ target_link_libraries(studio_daemon Threads::Threads wiringPi)
 target_compile_options(studio_daemon PRIVATE
   $<$<CXX_COMPILER_ID:Clang>:-Weverything -Wno-c++98-compat>
   $<$<CXX_COMPILER_ID:GNU>:-Wall -Wextra>)
+
+install(TARGETS studio_daemon
+        RUNTIME DESTINATION bin
+        LIBRARY DESTINATION lib
+        ARCHIVE DESTINATION lib)
+install(FILES script/launch_studio_daemon.sh
+        DESTINATION /etc/profile.d
+        PERMISSIONS OWNER_READ OWNER_EXECUTE GROUP_READ WORLD_READ)

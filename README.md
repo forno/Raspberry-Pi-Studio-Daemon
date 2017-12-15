@@ -51,3 +51,12 @@ Note: The program require super user permittion for Wiring Pi.
 ```bash
 sudo build/studio_daemon
 ```
+
+# Known issue
+
+- /etc/project.d/においてある実行ファイルのコピー元はraspberry pi内の~/monitor_project/に置いてあります。
+- 現在、LINE notifyのトークンは丸橋のアカウントで作成済み。 
+- CdSセンサの読み込みにはGPIO17を使用。 
+- 監視用のraspberry piは現在、ものつくり工房玄関付近に設置中。  
+- プログラムの稼働中はraspberry piに給電し続ける必要アリ(工房から帰る前〜工房に来るまで)。 
+- 光センサの読み取りに問題が多発するなら、物理的なスイッチを使うかも。
